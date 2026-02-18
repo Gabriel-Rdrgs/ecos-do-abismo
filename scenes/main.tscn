@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bx1d2d2hpyyun"]
+
+[ext_resource type="PackedScene" uid="uid://dlfgrw02p2y1t" path="res://scenes/player/Player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://p0ws3xn84vyu" path="res://scripts/Player.gd" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://cqxt1wn35eef" path="res://icon.svg" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://dph8ff5a1xagh" path="res://scripts/Hud.gd" id="4_jyhfs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
+size = Vector2(862, 10)
+
+[node name="main" type="Node2D" unique_id=773722913]
+
+[node name="Player" parent="." unique_id=986612332 instance=ExtResource("1_o5qli")]
+position = Vector2(99, 100)
+script = ExtResource("2_0wfyh")
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=811402110]
+position = Vector2(-1, 165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=673901600]
+position = Vector2(434, 6)
+shape = SubResource("RectangleShape2D_jyhfs")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground" unique_id=1145710018]
+position = Vector2(434.00003, 6)
+scale = Vector2(6.734375, 0.1015625)
+texture = ExtResource("3_sugp2")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=326710828]
+script = ExtResource("4_jyhfs")
+
+[node name="HUDRoot" type="Control" parent="HUD" unique_id=105340446]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HPBar" type="TextureProgressBar" parent="HUD/HUDRoot" unique_id=250398986]
+layout_mode = 1
+offset_right = 300.0
+offset_bottom = 20.0
+max_value = 1.0
+value = 1.0
+
+[node name="StaminaBar" type="TextureProgressBar" parent="HUD/HUDRoot" unique_id=876957724]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 37.0
+offset_right = 304.0
+offset_bottom = 57.0
+
+[node name="EcoBar" type="TextureProgressBar" parent="HUD/HUDRoot" unique_id=19590027]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 58.0
+offset_right = 308.0
+offset_bottom = 78.0

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dlfgrw02p2y1t"]
+
+[ext_resource type="Texture2D" uid="uid://3a13kc3vpl2c" path="res://assets/png-clipart-knight-pixel-art-cartoon-knight-sticker-cartoon.png" id="1_wr5hl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
+size = Vector2(127, 128)
+
+[node name="Player" type="CharacterBody2D" unique_id=986612332 groups=["player"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1166845980]
+position = Vector2(0.5000012, 2.3841858e-07)
+scale = Vector2(0.1411111, 0.12994924)
+texture = ExtResource("1_wr5hl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=695877370]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_dovo2")
