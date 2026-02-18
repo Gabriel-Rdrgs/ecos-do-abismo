@@ -8,6 +8,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
 size = Vector2(862, 10)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
+bg_color = Color(1, 0.6, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
+bg_color = Color(0.6, 1, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
+bg_color = Color(0.23921569, 0.6, 1, 1)
+
 [node name="main" type="Node2D" unique_id=773722913]
 
 [node name="Player" parent="." unique_id=986612332 instance=ExtResource("1_o5qli")]
@@ -36,24 +45,35 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="HPBar" type="TextureProgressBar" parent="HUD/HUDRoot" unique_id=250398986]
-layout_mode = 1
+[node name="HPBar" type="ProgressBar" parent="HUD/HUDRoot" unique_id=1205798689]
+layout_mode = 0
 offset_right = 300.0
-offset_bottom = 20.0
+offset_bottom = 27.0
+theme_override_colors/font_color = Color(0.9490196, 0, 0, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_jyhfs")
 max_value = 1.0
 value = 1.0
 
-[node name="StaminaBar" type="TextureProgressBar" parent="HUD/HUDRoot" unique_id=876957724]
-layout_mode = 1
-offset_left = 4.0
-offset_top = 37.0
-offset_right = 304.0
-offset_bottom = 57.0
+[node name="StaminaBar" type="ProgressBar" parent="HUD/HUDRoot" unique_id=1710755604]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 36.0
+offset_right = 301.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(0, 0, 0.9490196, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_tbgi4")
+max_value = 1.0
+value = 1.0
 
-[node name="EcoBar" type="TextureProgressBar" parent="HUD/HUDRoot" unique_id=19590027]
-layout_mode = 1
-offset_left = 8.0
-offset_top = 58.0
-offset_right = 308.0
-offset_bottom = 78.0
+[node name="EcoBar" type="ProgressBar" parent="HUD/HUDRoot" unique_id=1425991780]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 72.0
+offset_right = 299.0
+offset_bottom = 99.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_tefeu")
+max_value = 1.0
+value = 1.0

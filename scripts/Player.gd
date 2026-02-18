@@ -23,6 +23,10 @@ const JUMP_FORCE := -400.0
 
 func _ready() -> void:
 	_calculate_stats()
+	# TESTE: deixar tudo na metade para ver as barras mexendo
+	hp = max_hp / 2
+	stamina = max_stamina / 2
+	eco = max_eco / 2
 
 func _calculate_stats() -> void:
 	max_hp = 100 + vig * 20
