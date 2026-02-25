@@ -21,8 +21,18 @@ const GRAVITY := 1200.0
 const MOVE_SPEED := 200.0
 const JUMP_FORCE := -400.0
 
+# ===== Ataque =====
+const LIGHT_ATTACK_STAMINA_COST := 15.0
+const LIGHT_ATTACK_DAMAGE := 40
+const LIGHT_ATTACK_COOLDOWN := 0.3
+
+var can_attack := true
+var attack_cooldown_timer := 0.0
+
 func _ready() -> void:
 	_calculate_stats()
+	$AttackArea.body_entered.connect(_on_attack_area_body_entered)
+
 
 func _calculate_stats() -> void:
 	max_hp = 100 + vig * 20
@@ -37,6 +47,7 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_handle_movement(delta)
 	_handle_jump()
+	_handle_attack(delta)
 
 	move_and_slide()
 
@@ -59,3 +70,30 @@ func _handle_movement(delta: float) -> void:
 func _handle_jump() -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_FORCE
+		
+func _handle_attack(delta: float) -> void:
+	# Atualiza o cooldown
+	if not can_attack:
+		attack_cooldown_timer -= delta
+		if attack_cooldown_timer <= 0.0:
+			can_attack = true
+
+	# Se apertar attack_light, tem stamina e pode atacar
+	if Input.is_action_just_pressed("attack_light") and can_attack and stamina >= LIGHT_ATTACK_STAMINA_COST:
+		stamina -= LIGHT_ATTACK_STAMINA_COST
+		can_attack = false
+		attack_cooldown_timer = LIGHT_ATTACK_COOLDOWN
+
+		# Ativa a área de ataque brevemente
+		$AttackArea.monitoring = true
+		$AttackArea.monitorable = true
+
+		# Desativa após 0.1s (janela de hit)
+		await get_tree().create_timer(0.1).timeout
+		$AttackArea.monitoring = false
+		$AttackArea.monitorable = false
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemy"):
+		if body.has_method("take_damage"):
+			body.take_damage(LIGHT_ATTACK_DAMAGE)

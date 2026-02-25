@@ -7,7 +7,6 @@ load_path = "res://.godot/imported/png-clipart-knight-pixel-art-cartoon-knight-s
 size = Vector2(127, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8nba"]
-size = Vector2(40, 40)
 
 [node name="Player" type="CharacterBody2D" unique_id=986612332 groups=["player"]]
 
@@ -23,6 +22,6 @@ shape = SubResource("RectangleShape2D_dovo2")
 [node name="AttackArea" type="Area2D" parent="." unique_id=67546683]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=206886772]
-position = Vector2(84, -2)
+position = Vector2(74, 0)
 shape = SubResource("RectangleShape2D_o8nba")
 debug_color = Color(0.5803922, 0.101960786, 0, 0.64705884)
