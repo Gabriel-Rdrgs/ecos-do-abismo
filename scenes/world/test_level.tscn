@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://8polphmcf5ww"]
+
+[ext_resource type="PackedScene" uid="uid://c2c1oyql8u55g" path="res://scenes/player/player.tscn" id="1_2x7fr"]
+[ext_resource type="Script" uid="uid://cmo1f1b5nnasj" path="res://scripts/teste.gd" id="1_7lndr"]
+[ext_resource type="PackedScene" uid="uid://ci5g83fom0rw8" path="res://scenes/ui/hud.tscn" id="2_swvrr"]
+[ext_resource type="PackedScene" uid="uid://bl8pxd7jiyeus" path="res://scenes/enemy/EnemyDummy.tscn" id="4_7gmxp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swvrr"]
+size = Vector2(800, 40)
+
+[node name="TestLevel" type="Node2D" unique_id=1430448256]
+script = ExtResource("1_7lndr")
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=30830696]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1842335210]
+position = Vector2(342, 255)
+shape = SubResource("RectangleShape2D_swvrr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor/CollisionShape2D" unique_id=1629940266]
+
+[node name="Player" parent="." unique_id=1697551249 instance=ExtResource("1_2x7fr")]
+position = Vector2(78, -16)
+spell_scene = null
+
+[node name="HUD" parent="." unique_id=47098250 instance=ExtResource("2_swvrr")]
+
+[node name="Node2D" parent="." unique_id=1432950796 instance=ExtResource("4_7gmxp")]
+position = Vector2(295, 204)

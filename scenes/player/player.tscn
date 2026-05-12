@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://c2c1oyql8u55g"]
+
+[ext_resource type="Script" uid="uid://e4k31tsinh1c" path="res://scripts/player/player.gd" id="1_dovo2"]
+[ext_resource type="Script" uid="uid://bu62kxb7qjpk6" path="res://scripts/player/player_stats.gd" id="2_gmlin"]
+[ext_resource type="PackedScene" uid="uid://bnjhph5ussm8b" path="res://scenes/projectiles/eco_projectile.tscn" id="2_lvxji"]
+[ext_resource type="Texture2D" uid="uid://di7d76jmskvhv" path="res://assets/Meshy_AI_e24067c62ecd498190d3d8c63b7d71259b0994a8c1a32860a1bece38562157bf.png" id="3_gmlin"]
+
+[sub_resource type="Resource" id="Resource_lvxji"]
+script = ExtResource("2_gmlin")
+metadata/_custom_type_script = "uid://bu62kxb7qjpk6"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
+size = Vector2(83.099884, 18.080282)
+
+[node name="Player" type="CharacterBody2D" unique_id=1697551249]
+script = ExtResource("1_dovo2")
+spell_scene = ExtResource("2_lvxji")
+stats = SubResource("Resource_lvxji")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2124366718]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_gmlin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1822825223]
+shape = SubResource("RectangleShape2D_dovo2")
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=1659247158]
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=992148662]
+position = Vector2(32, 17)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=447224740]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(19, 12)
+rotation = 0.62133723
+shape = SubResource("RectangleShape2D_gmlin")
+
+[node name="SpellSpawnPoint" type="Marker2D" parent="." unique_id=1036847571]
+position = Vector2(35, -9)
