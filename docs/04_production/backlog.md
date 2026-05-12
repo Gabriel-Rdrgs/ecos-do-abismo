@@ -12,10 +12,11 @@ Itens organizados por prioridade e área. Cada item deve ser pequeno o suficient
 - [x] Criar context_resume.md
 - [x] Criar roadmap.md
 - [x] Criar chat_protocol.md
-- [ ] Criar tech_design.md
-- [ ] Criar art_bible.md
-- [ ] Criar animation_bible.md
-- [ ] Criar prompts.md
+- [x] Criar tech_design.md
+- [x] Criar art_bible.md
+- [x] Criar animation_bible.md
+- [x] Criar workflow.md
+- [x] Criar prompts.md
 
 ## P1 — Protótipo técnico
 - [ ] Revisar estrutura atual de cenas e scripts
