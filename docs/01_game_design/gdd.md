@@ -1,3 +1,11 @@
+# GDD — Ecos do Abismo
+
+Status: Ativo  
+Versão: 0.1  
+Última atualização: 2026-05-12
+
+Este documento consolida a visão macro de design do jogo e evolui a partir do planejamento inicial do projeto.
+
 # Ecos do Abismo - Planning
 
 ## 1. Visão Geral
