@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8polphmcf5ww"]
 
 [ext_resource type="PackedScene" uid="uid://c2c1oyql8u55g" path="res://scenes/player/player.tscn" id="1_2x7fr"]
-[ext_resource type="Script" uid="uid://cmo1f1b5nnasj" path="res://scripts/teste.gd" id="1_7lndr"]
+[ext_resource type="Script" uid="uid://bakbqchmr8uyn" path="res://scripts/world/test_level.gd" id="1_7gmxp"]
 [ext_resource type="PackedScene" uid="uid://ci5g83fom0rw8" path="res://scenes/ui/hud.tscn" id="2_swvrr"]
 [ext_resource type="PackedScene" uid="uid://bl8pxd7jiyeus" path="res://scenes/enemy/EnemyDummy.tscn" id="4_7gmxp"]
 
@@ -9,7 +9,7 @@
 size = Vector2(800, 40)
 
 [node name="TestLevel" type="Node2D" unique_id=1430448256]
-script = ExtResource("1_7lndr")
+script = ExtResource("1_7gmxp")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=30830696]
 
