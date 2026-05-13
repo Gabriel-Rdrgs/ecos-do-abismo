@@ -29,6 +29,9 @@ signal eco_changed(current: int, maximum: int)
 
 @onready var attack_area: Area2D = $AttackArea
 @onready var spell_spawn_point: Marker2D = $SpellSpawnPoint
+@onready var combat: Node = $Combat
+@onready var attack_duration_timer: Timer = $AttackDurationTimer
+@onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
 
 var max_hp: int
 var max_stamina: float
@@ -63,11 +66,13 @@ func _ready() -> void:
 	current_stamina = max_stamina
 	current_eco = max_eco
 
-	attack_area.monitoring = false
-	attack_area.body_entered.connect(_on_attack_area_body_entered)
-	attack_area.area_entered.connect(_on_attack_area_area_entered)
+	combat.setup(
+		self ,
+		attack_area,
+		attack_duration_timer,
+		attack_cooldown_timer
+	)
 
-	# Emite estado inicial para a HUD
 	hp_changed.emit(current_hp, max_hp)
 	stamina_changed.emit(current_stamina, max_stamina)
 	eco_changed.emit(current_eco, max_eco)
@@ -81,7 +86,6 @@ func _physics_process(delta: float) -> void:
 		if not is_dashing:
 			current_stamina = minf(current_stamina + stamina_recover_rate * delta, max_stamina)
 
-	# Emite sinal de stamina apenas quando o valor mudou de fato
 	var stamina_rounded := snappedf(current_stamina, 0.5)
 	if stamina_rounded != _prev_stamina:
 		_prev_stamina = stamina_rounded
@@ -101,7 +105,7 @@ func _physics_process(delta: float) -> void:
 			_set_stamina(current_stamina - jump_stamina_cost)
 
 	if Input.is_action_just_pressed("attack"):
-		try_attack()
+		combat.try_attack()
 
 	if Input.is_action_just_pressed("dash"):
 		try_dash(direction)
@@ -109,7 +113,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("cast_spell"):
 		try_cast_spell()
 
-	update_attack_area_direction()
+	combat.update_attack_area_direction()
 	move_and_slide()
 
 func take_damage(amount: int) -> void:
@@ -119,7 +123,6 @@ func take_damage(amount: int) -> void:
 		_on_death()
 
 func _on_death() -> void:
-	# Placeholder — expandir com animacao e logica de morte
 	queue_free()
 
 func _set_stamina(value: float) -> void:
@@ -129,24 +132,6 @@ func _set_stamina(value: float) -> void:
 func _set_eco(value: int) -> void:
 	current_eco = clampi(value, 0, max_eco)
 	eco_changed.emit(current_eco, max_eco)
-
-func try_attack() -> void:
-	if not can_attack or is_dashing:
-		return
-	if current_stamina < attack_stamina_cost:
-		return
-
-	can_attack = false
-	is_attacking = true
-	_set_stamina(current_stamina - attack_stamina_cost)
-	attack_area.monitoring = true
-
-	await get_tree().create_timer(attack_duration).timeout
-	attack_area.monitoring = false
-	is_attacking = false
-
-	await get_tree().create_timer(attack_cooldown).timeout
-	can_attack = true
 
 func try_dash(input_direction: float) -> void:
 	if not can_dash or is_attacking:
@@ -194,15 +179,3 @@ func try_cast_spell() -> void:
 
 	await get_tree().create_timer(spell_cooldown).timeout
 	can_cast_spell = true
-
-func update_attack_area_direction() -> void:
-	var attack_offset := 20.0
-	attack_area.position.x = attack_offset * facing_direction
-
-func _on_attack_area_body_entered(body: Node) -> void:
-	if body.has_method("take_damage"):
-		body.take_damage(attack_damage)
-
-func _on_attack_area_area_entered(area: Area2D) -> void:
-	if area.has_method("take_damage"):
-		area.take_damage(attack_damage)
