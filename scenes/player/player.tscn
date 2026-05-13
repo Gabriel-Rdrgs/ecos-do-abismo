@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bnjhph5ussm8b" path="res://scenes/projectiles/eco_projectile.tscn" id="2_lvxji"]
 [ext_resource type="Texture2D" uid="uid://m6iewekltrem" path="res://assets/Meshy_AI_e24067c62ecd498190d3d8c63b7d71259b0994a8c1a32860a1bece38562157bf.png" id="3_gmlin"]
 [ext_resource type="Script" uid="uid://bq5ccor5bo206" path="res://scripts/player/player_combat.gd" id="5_p47bc"]
+[ext_resource type="Script" uid="uid://bqibcpdcyq6td" path="res://scripts/player/player_magic.gd" id="6_75vfm"]
 
 [sub_resource type="Resource" id="Resource_lvxji"]
 script = ExtResource("2_gmlin")
@@ -66,3 +67,6 @@ one_shot = true
 
 [node name="Combat" type="Node" parent="." unique_id=34511373]
 script = ExtResource("5_p47bc")
+
+[node name="Magic" type="Node" parent="." unique_id=1995838536]
+script = ExtResource("6_75vfm")

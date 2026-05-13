@@ -30,8 +30,10 @@ signal eco_changed(current: int, maximum: int)
 @onready var attack_area: Area2D = $AttackArea
 @onready var spell_spawn_point: Marker2D = $SpellSpawnPoint
 @onready var combat: Node = $Combat
+@onready var magic: Node = $Magic
 @onready var attack_duration_timer: Timer = $AttackDurationTimer
 @onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
+@onready var spell_cooldown_timer: Timer = $SpellCooldownTimer
 
 var max_hp: int
 var max_stamina: float
@@ -73,6 +75,12 @@ func _ready() -> void:
 		attack_cooldown_timer
 	)
 
+	magic.setup(
+		self ,
+		spell_spawn_point,
+		spell_cooldown_timer
+	)
+
 	hp_changed.emit(current_hp, max_hp)
 	stamina_changed.emit(current_stamina, max_stamina)
 	eco_changed.emit(current_eco, max_eco)
@@ -111,7 +119,7 @@ func _physics_process(delta: float) -> void:
 		try_dash(direction)
 
 	if Input.is_action_just_pressed("cast_spell"):
-		try_cast_spell()
+		magic.try_cast_spell()
 
 	combat.update_attack_area_direction()
 	move_and_slide()
@@ -156,26 +164,3 @@ func try_dash(input_direction: float) -> void:
 
 	await get_tree().create_timer(dash_cooldown).timeout
 	can_dash = true
-
-func try_cast_spell() -> void:
-	if not can_cast_spell or is_dashing:
-		return
-	if current_eco < spell_eco_cost:
-		return
-	if spell_scene == null:
-		return
-
-	can_cast_spell = false
-	_set_eco(current_eco - int(spell_eco_cost))
-
-	var projectile = spell_scene.instantiate()
-	if projectile == null:
-		can_cast_spell = true
-		return
-
-	get_tree().current_scene.add_child(projectile)
-	projectile.global_position = spell_spawn_point.global_position
-	projectile.set("direction", facing_direction)
-
-	await get_tree().create_timer(spell_cooldown).timeout
-	can_cast_spell = true
