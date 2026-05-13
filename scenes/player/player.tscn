@@ -16,6 +16,8 @@ size = Vector2(16, 32)
 size = Vector2(83.099884, 18.080282)
 
 [node name="Player" type="CharacterBody2D" unique_id=1697551249]
+collision_layer = 1
+collision_mask = 1
 script = ExtResource("1_dovo2")
 spell_scene = ExtResource("2_lvxji")
 stats = SubResource("Resource_lvxji")
@@ -30,6 +32,8 @@ shape = SubResource("RectangleShape2D_dovo2")
 [node name="Muzzle" type="Marker2D" parent="." unique_id=1659247158]
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=992148662]
+collision_layer = 2
+collision_mask = 8
 position = Vector2(32, 17)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=447224740]
