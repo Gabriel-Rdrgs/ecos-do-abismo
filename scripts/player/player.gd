@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+signal hp_changed(current: int, maximum: int)
+signal stamina_changed(current: float, maximum: float)
+signal eco_changed(current: int, maximum: int)
+
 @export var move_speed: float = 180.0
 @export var jump_velocity: float = -380.0
 @export var gravity: float = 980.0
@@ -34,6 +38,8 @@ var current_hp: int
 var current_stamina: float
 var current_eco: int
 
+var _prev_stamina: float = -1.0
+
 var is_attacking: bool = false
 var can_attack: bool = true
 
@@ -61,6 +67,11 @@ func _ready() -> void:
 	attack_area.body_entered.connect(_on_attack_area_body_entered)
 	attack_area.area_entered.connect(_on_attack_area_area_entered)
 
+	# Emite estado inicial para a HUD
+	hp_changed.emit(current_hp, max_hp)
+	stamina_changed.emit(current_stamina, max_stamina)
+	eco_changed.emit(current_eco, max_eco)
+
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -69,6 +80,12 @@ func _physics_process(delta: float) -> void:
 			velocity.y = 0
 		if not is_dashing:
 			current_stamina = minf(current_stamina + stamina_recover_rate * delta, max_stamina)
+
+	# Emite sinal de stamina apenas quando o valor mudou de fato
+	var stamina_rounded := snappedf(current_stamina, 0.5)
+	if stamina_rounded != _prev_stamina:
+		_prev_stamina = stamina_rounded
+		stamina_changed.emit(current_stamina, max_stamina)
 
 	var direction := Input.get_axis("move_left", "move_right")
 
@@ -81,7 +98,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		if current_stamina >= jump_stamina_cost and not is_dashing:
 			velocity.y = jump_velocity
-			current_stamina -= jump_stamina_cost
+			_set_stamina(current_stamina - jump_stamina_cost)
 
 	if Input.is_action_just_pressed("attack"):
 		try_attack()
@@ -95,16 +112,33 @@ func _physics_process(delta: float) -> void:
 	update_attack_area_direction()
 	move_and_slide()
 
+func take_damage(amount: int) -> void:
+	current_hp = maxi(current_hp - amount, 0)
+	hp_changed.emit(current_hp, max_hp)
+	if current_hp <= 0:
+		_on_death()
+
+func _on_death() -> void:
+	# Placeholder — expandir com animacao e logica de morte
+	queue_free()
+
+func _set_stamina(value: float) -> void:
+	current_stamina = clampf(value, 0.0, max_stamina)
+	stamina_changed.emit(current_stamina, max_stamina)
+
+func _set_eco(value: int) -> void:
+	current_eco = clampi(value, 0, max_eco)
+	eco_changed.emit(current_eco, max_eco)
+
 func try_attack() -> void:
 	if not can_attack or is_dashing:
 		return
-
 	if current_stamina < attack_stamina_cost:
 		return
 
 	can_attack = false
 	is_attacking = true
-	current_stamina -= attack_stamina_cost
+	_set_stamina(current_stamina - attack_stamina_cost)
 	attack_area.monitoring = true
 
 	await get_tree().create_timer(attack_duration).timeout
@@ -117,13 +151,12 @@ func try_attack() -> void:
 func try_dash(input_direction: float) -> void:
 	if not can_dash or is_attacking:
 		return
-
 	if current_stamina < dash_stamina_cost:
 		return
 
 	can_dash = false
 	is_dashing = true
-	current_stamina -= dash_stamina_cost
+	_set_stamina(current_stamina - dash_stamina_cost)
 
 	if input_direction != 0:
 		dash_direction = int(sign(input_direction))
@@ -142,15 +175,13 @@ func try_dash(input_direction: float) -> void:
 func try_cast_spell() -> void:
 	if not can_cast_spell or is_dashing:
 		return
-
 	if current_eco < spell_eco_cost:
 		return
-
 	if spell_scene == null:
 		return
 
 	can_cast_spell = false
-	current_eco -= int(spell_eco_cost)
+	_set_eco(current_eco - int(spell_eco_cost))
 
 	var projectile = spell_scene.instantiate()
 	if projectile == null:

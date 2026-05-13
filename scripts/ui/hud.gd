@@ -4,23 +4,16 @@ extends CanvasLayer
 @onready var stamina_label: Label = $Panel/StatsList/StaminaLabel
 @onready var eco_label: Label = $Panel/StatsList/EcoLabel
 
-var player: CharacterBody2D
+func connect_to_player(player: CharacterBody2D) -> void:
+	player.hp_changed.connect(_on_hp_changed)
+	player.stamina_changed.connect(_on_stamina_changed)
+	player.eco_changed.connect(_on_eco_changed)
 
-func set_player(new_player: CharacterBody2D) -> void:
-	player = new_player
+func _on_hp_changed(current: int, maximum: int) -> void:
+	hp_label.text = "HP: %d / %d" % [current, maximum]
 
-func _process(_delta: float) -> void:
-	if player == null:
-		return
+func _on_stamina_changed(current: float, maximum: float) -> void:
+	stamina_label.text = "Stamina: %d / %d" % [int(current), int(maximum)]
 
-	if player.has_method("get"):
-		var current_hp = player.get("current_hp")
-		var max_hp = player.get("max_hp")
-		var current_stamina = player.get("current_stamina")
-		var max_stamina = player.get("max_stamina")
-		var current_eco = player.get("current_eco")
-		var max_eco = player.get("max_eco")
-
-		hp_label.text = "HP: %d / %d" % [current_hp, max_hp]
-		stamina_label.text = "Stamina: %d / %d" % [current_stamina, max_stamina]
-		eco_label.text = "Eco: %d / %d" % [current_eco, max_eco]
+func _on_eco_changed(current: int, maximum: int) -> void:
+	eco_label.text = "Eco: %d / %d" % [current, maximum]
