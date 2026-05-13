@@ -31,9 +31,12 @@ signal eco_changed(current: int, maximum: int)
 @onready var spell_spawn_point: Marker2D = $SpellSpawnPoint
 @onready var combat: Node = $Combat
 @onready var magic: Node = $Magic
+@onready var dash: Node = $Dash
 @onready var attack_duration_timer: Timer = $AttackDurationTimer
 @onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
 @onready var spell_cooldown_timer: Timer = $SpellCooldownTimer
+@onready var dash_duration_timer: Timer = $DashDurationTimer
+@onready var dash_cooldown_timer: Timer = $DashCooldownTimer
 
 var max_hp: int
 var max_stamina: float
@@ -54,7 +57,6 @@ var can_dash: bool = true
 var can_cast_spell: bool = true
 
 var facing_direction: int = 1
-var dash_direction: int = 1
 
 func _ready() -> void:
 	if stats == null:
@@ -79,6 +81,12 @@ func _ready() -> void:
 		self ,
 		spell_spawn_point,
 		spell_cooldown_timer
+	)
+
+	dash.setup(
+		self ,
+		dash_duration_timer,
+		dash_cooldown_timer
 	)
 
 	hp_changed.emit(current_hp, max_hp)
@@ -116,7 +124,7 @@ func _physics_process(delta: float) -> void:
 		combat.try_attack()
 
 	if Input.is_action_just_pressed("dash"):
-		try_dash(direction)
+		dash.try_dash(direction)
 
 	if Input.is_action_just_pressed("cast_spell"):
 		magic.try_cast_spell()
@@ -131,7 +139,7 @@ func take_damage(amount: int) -> void:
 		_on_death()
 
 func _on_death() -> void:
-	queue_free()
+	GameManager.on_player_death(self )
 
 func _set_stamina(value: float) -> void:
 	current_stamina = clampf(value, 0.0, max_stamina)
@@ -140,27 +148,3 @@ func _set_stamina(value: float) -> void:
 func _set_eco(value: int) -> void:
 	current_eco = clampi(value, 0, max_eco)
 	eco_changed.emit(current_eco, max_eco)
-
-func try_dash(input_direction: float) -> void:
-	if not can_dash or is_attacking:
-		return
-	if current_stamina < dash_stamina_cost:
-		return
-
-	can_dash = false
-	is_dashing = true
-	_set_stamina(current_stamina - dash_stamina_cost)
-
-	if input_direction != 0:
-		dash_direction = int(sign(input_direction))
-	else:
-		dash_direction = facing_direction
-
-	velocity.x = dash_direction * dash_speed
-	velocity.y = 0
-
-	await get_tree().create_timer(dash_duration).timeout
-	is_dashing = false
-
-	await get_tree().create_timer(dash_cooldown).timeout
-	can_dash = true

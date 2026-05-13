@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dv87a1i7vf3oy"]
+
+[ext_resource type="Script" uid="uid://dm2do3wxcggoj" path="res://scripts/world/eco_shadow.gd" id="1_5btwe"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_umjqw"]
+radius = 20.0
+
+[node name="EcoShadow" type="Area2D" unique_id=673259449]
+script = ExtResource("1_5btwe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=255937169]
+shape = SubResource("CircleShape2D_umjqw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=328310877]

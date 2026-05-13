@@ -20,7 +20,22 @@ shape = SubResource("RectangleShape2D_swvrr")
 [node name="Sprite2D" type="Sprite2D" parent="Floor/CollisionShape2D" unique_id=1629940266]
 
 [node name="Player" parent="." unique_id=1697551249 instance=ExtResource("1_2x7fr")]
-position = Vector2(78, -16)
+position = Vector2(80, 94)
+move_speed = null
+jump_velocity = null
+gravity = null
+jump_stamina_cost = null
+stamina_recover_rate = null
+attack_stamina_cost = null
+attack_duration = null
+attack_cooldown = null
+attack_damage = null
+dash_speed = null
+dash_duration = null
+dash_cooldown = null
+dash_stamina_cost = null
+spell_eco_cost = null
+spell_cooldown = null
 spell_scene = null
 
 [node name="HUD" parent="." unique_id=47098250 instance=ExtResource("2_swvrr")]
