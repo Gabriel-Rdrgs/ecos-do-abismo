@@ -40,6 +40,3 @@ dash_stamina_cost = null
 
 [node name="Node2D" parent="." unique_id=1432950796 instance=ExtResource("4_7gmxp")]
 position = Vector2(295, 204)
-
-[node name="EcoProjectile" parent="." unique_id=829881158 instance=ExtResource("5_3soa3")]
-position = Vector2(117, 89)

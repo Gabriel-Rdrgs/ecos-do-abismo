@@ -6,12 +6,7 @@ extends Area2D
 
 var direction: int = 1
 
-var _debug_logged_motion: bool = false # DEBUG TEMPORÁRIO — remover após validação da magia
-
 func _ready() -> void:
-	# DEBUG TEMPORÁRIO — remover após validação da magia
-	print("[EcoProjectile] _ready() — script carregado, posição inicial=", global_position)
-
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 
@@ -24,11 +19,6 @@ func _ready() -> void:
 	queue_free()
 
 func _physics_process(delta: float) -> void:
-	if not _debug_logged_motion:
-		_debug_logged_motion = true
-		# DEBUG TEMPORÁRIO — remover após validação da magia
-		print("[EcoProjectile] direction=%s velocidade_x=%s" % [direction, speed * direction])
-
 	position.x += speed * delta * direction
 
 func _on_body_entered(body: Node) -> void:
