@@ -14,7 +14,6 @@ signal eco_changed(current: int, maximum: int)
 @export var attack_stamina_cost: float = 12.0
 @export var attack_duration: float = 0.15
 @export var attack_cooldown: float = 0.30
-@export var attack_damage: int = 10
 
 @export var dash_speed: float = 420.0
 @export var dash_duration: float = 0.18

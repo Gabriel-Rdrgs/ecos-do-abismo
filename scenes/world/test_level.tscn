@@ -30,7 +30,6 @@ stamina_recover_rate = null
 attack_stamina_cost = null
 attack_duration = null
 attack_cooldown = null
-attack_damage = null
 dash_speed = null
 dash_duration = null
 dash_cooldown = null
