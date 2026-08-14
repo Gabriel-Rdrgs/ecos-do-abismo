@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bakbqchmr8uyn" path="res://scripts/world/test_level.gd" id="1_7gmxp"]
 [ext_resource type="PackedScene" uid="uid://ci5g83fom0rw8" path="res://scenes/ui/hud.tscn" id="2_swvrr"]
 [ext_resource type="PackedScene" uid="uid://bl8pxd7jiyeus" path="res://scenes/enemy/EnemyDummy.tscn" id="4_7gmxp"]
+[ext_resource type="PackedScene" uid="uid://bnjhph5ussm8b" path="res://scenes/projectiles/eco_projectile.tscn" id="5_3soa3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swvrr"]
 size = Vector2(800, 40)
@@ -34,11 +35,11 @@ dash_speed = null
 dash_duration = null
 dash_cooldown = null
 dash_stamina_cost = null
-spell_eco_cost = null
-spell_cooldown = null
-spell_scene = null
 
 [node name="HUD" parent="." unique_id=47098250 instance=ExtResource("2_swvrr")]
 
 [node name="Node2D" parent="." unique_id=1432950796 instance=ExtResource("4_7gmxp")]
 position = Vector2(295, 204)
+
+[node name="EcoProjectile" parent="." unique_id=829881158 instance=ExtResource("5_3soa3")]
+position = Vector2(117, 89)
