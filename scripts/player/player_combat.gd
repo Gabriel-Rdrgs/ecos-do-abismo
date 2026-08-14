@@ -58,8 +58,10 @@ func _on_attack_cooldown_timeout() -> void:
 
 func _on_attack_area_body_entered(body: Node) -> void:
     if body.has_method("take_damage"):
-        body.take_damage(player.attack_damage)
+        var damage := CombatCalculator.calculate_physical_damage(player.stats)
+        body.take_damage(damage)
 
 func _on_attack_area_area_entered(area: Area2D) -> void:
     if area.has_method("take_damage"):
-        area.take_damage(player.attack_damage)
+        var damage := CombatCalculator.calculate_physical_damage(player.stats)
+        area.take_damage(damage)

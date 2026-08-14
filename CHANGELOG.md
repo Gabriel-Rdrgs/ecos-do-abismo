@@ -9,3 +9,4 @@
 - Dash horizontal
 - Magia simples
 - Cena de teste
+- CombatCalculator (dano físico e mágico centralizados, usado por PlayerCombat e EcoProjectile)

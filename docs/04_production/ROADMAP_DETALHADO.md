@@ -27,10 +27,10 @@ Cada fase só começa quando a anterior estiver estável o suficiente para não 
 | Programação | Magia simples (eco projectile) | ✅ |
 | Programação | Inimigo dummy recebendo dano | ✅ |
 | Programação | Collision layers/masks corretas | ✅ |
-| Programação | Substituir `await create_timer` por Timer nodes | ⬜ |
-| Programação | Separar PlayerCombat.gd | ⬜ |
-| Programação | Separar PlayerMagic.gd | ⬜ |
-| Programação | GameManager autoload | ⬜ |
+| Programação | Substituir `await create_timer` por Timer nodes | ✅ |
+| Programação | Separar PlayerCombat.gd | ✅ |
+| Programação | Separar PlayerMagic.gd | ✅ |
+| Programação | GameManager autoload | ✅ |
 | Assets | Sprite provisório do player (legível) | ⬜ |
 | Assets | Textura provisória de chão | ⬜ |
 

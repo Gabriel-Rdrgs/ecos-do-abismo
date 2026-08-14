@@ -35,6 +35,8 @@ func try_cast_spell() -> void:
         player.can_cast_spell = true
         return
 
+    projectile.caster_stats = player.stats
+
     player.get_tree().current_scene.add_child(projectile)
     projectile.global_position = spell_spawn_point.global_position
     projectile.set("direction", player.facing_direction)

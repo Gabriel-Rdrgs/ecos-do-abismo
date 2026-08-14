@@ -79,9 +79,11 @@ res://
 
 ### Sistemas (autoloads futuros)
 - `GameManager.gd`
-- `CombatCalculator.gd`
 - `SaveManager.gd`
 - `SceneFlow.gd`
+
+### Combate
+- `scripts/systems/combat_calculator.gd` — classe estática (`RefCounted` + `class_name CombatCalculator`), **não é autoload**. Centraliza `calculate_physical_damage(stats)` e `calculate_spell_damage(stats, base_damage, int_scaling, fth_scaling)`. Usada por `player_combat.gd` (dano físico) e `eco_projectile.gd` (dano do Dardo de Eco, `base_damage = 35` conforme `gdd.md` 6.3).
 
 ### Cena de teste
 - `scenes/world/test_level.tscn`
@@ -141,9 +143,10 @@ Conexão feita em `test_level.gd` via `hud.connect_to_player(player)`.
 - HUD via sinais (sem polling)
 - Collision layers configuradas corretamente
 - Cena de teste funcional
+- PlayerCombat e PlayerMagic separados do player.gd
+- GameManager autoload criado
+- `await create_timer` substituído por nós Timer no player
+- CombatCalculator centralizando dano físico e mágico (usado por PlayerCombat e EcoProjectile)
 
 ### Próximo foco
-- Substituir `await create_timer` por nós Timer
-- Separar PlayerCombat e PlayerMagic
 - Preparar integração com AnimationPlayer
-- Criar GameManager autoload

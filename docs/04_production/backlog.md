@@ -30,13 +30,13 @@ Itens organizados por prioridade e área. Cada item deve ser pequeno o suficient
 - [x] Migrar HUD de polling para sinais
 - [x] Corrigir collision layers/masks (bug HP player)
 - [x] Organizar cena de teste (test_level.tscn + test_level.gd)
-- [ ] Substituir `await create_timer` por nós Timer no player
-- [ ] Separar lógica de combate em PlayerCombat.gd
-- [ ] Separar lógica de magia em PlayerMagic.gd
+- [x] Substituir `await create_timer` por nós Timer no player
+- [x] Separar lógica de combate em PlayerCombat.gd
+- [x] Separar lógica de magia em PlayerMagic.gd
 - [ ] Revisar magia simples (eco_projectile)
 - [ ] Consolidar dummy/inimigo básico com HurtBox separado
-- [ ] Criar GameManager autoload
-- [ ] Criar CombatCalculator
+- [x] Criar GameManager autoload
+- [x] Criar CombatCalculator
 
 ---
 
